@@ -1,0 +1,14 @@
+# npm
+/node_modules/
+
+# Bower
+/bower_components/
+
+# PureScript
+/.pulp-cache/
+/.psci*
+/output
+.psa-stash
+
+# Project-specific
+/www/app.js
