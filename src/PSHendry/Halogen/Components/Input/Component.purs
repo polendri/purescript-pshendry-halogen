@@ -12,13 +12,13 @@ import Halogen.HTML.Events.Indexed as HE
 import Halogen.HTML.Properties.Indexed as HP
 import Utils.DOM (focus, select)
 
-data Query t a
+data InputQuery t a
   = GetValue (Maybe t -> a)
   | SetValue t a
   | Focus a
   | ValueInput String a
 
-type State t =
+type InputState t =
   { id :: String
   , classes :: Array ClassName
   , enabled :: Boolean
@@ -31,11 +31,11 @@ mkComponent :: forall t e
    . HP.InputType
   -> (t -> String)
   -> (String -> Maybe t)
-  -> H.Component (State t) (Query t) (Aff (dom :: DOM | e))
+  -> H.Component (InputState t) (InputQuery t) (Aff (dom :: DOM | e))
 mkComponent inputType toStr fromStr = H.component { render, eval }
   where
 
-  render :: (State t) -> H.ComponentHTML (Query t)
+  render :: (InputState t) -> H.ComponentHTML (InputQuery t)
   render state =
     HH.input
       [ HP.id_ state.id
@@ -47,7 +47,7 @@ mkComponent inputType toStr fromStr = H.component { render, eval }
       , HE.onValueInput (HE.input ValueInput)
       ]
 
-  eval :: (Query t) ~> H.ComponentDSL (State t) (Query t) (Aff (dom :: DOM | e))
+  eval :: (InputQuery t) ~> H.ComponentDSL (InputState t) (InputQuery t) (Aff (dom :: DOM | e))
   eval (GetValue continue) = do
     value <- H.gets _.value
     pure $ continue $ fromStr value
