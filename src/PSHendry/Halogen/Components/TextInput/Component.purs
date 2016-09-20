@@ -1,12 +1,15 @@
 -- | An <input> component accepting any text.
-module PSHendry.Halogen.Components.TextInput where
+module PSHendry.Halogen.Components.TextInput
+  ( component
+  , module PSHendry.Halogen.Components.Input
+  ) where
 
 import PSHendry.Prelude
-import Halogen.HTML.Properties.Indexed as HP
-
 import DOM (DOM)
 import Halogen as H
-import PSHendry.Halogen.Components.Input (Query, State, mkComponent)
+import Halogen.HTML.Properties.Indexed as HP
+import PSHendry.Halogen.Components.Input (Query, State)
+import PSHendry.Halogen.Components.Input as Input
 
 component :: forall e. H.Component (State String) (Query String) (Aff (dom :: DOM | e))
-component = mkComponent HP.InputText id Just
+component = Input.mkComponent HP.InputText id Just

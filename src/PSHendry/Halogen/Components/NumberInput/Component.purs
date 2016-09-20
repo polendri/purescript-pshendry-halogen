@@ -1,13 +1,16 @@
 -- | An <input> component accepting floating-point numbers.
-module PSHendry.Halogen.Components.NumberInput where
+module PSHendry.Halogen.Components.NumberInput
+  ( component
+  , module PSHendry.Halogen.Components.Input
+  ) where
 
 import PSHendry.Prelude
-import Halogen.HTML.Properties.Indexed as HP
-import PSHendry.Data.Number (parseNumber)
-
 import DOM (DOM)
 import Halogen as H
-import PSHendry.Halogen.Components.Input (Query, State, mkComponent)
+import Halogen.HTML.Properties.Indexed as HP
+import PSHendry.Data.Number (parseNumber)
+import PSHendry.Halogen.Components.Input (Query, State)
+import PSHendry.Halogen.Components.Input as Input
 
 component :: forall e. H.Component (State Number) (Query Number) (Aff (dom :: DOM | e))
-component = mkComponent HP.InputNumber show parseNumber
+component = Input.mkComponent HP.InputNumber show parseNumber
