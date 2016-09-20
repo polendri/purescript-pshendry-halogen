@@ -9,7 +9,7 @@ import DOM (DOM)
 import Halogen as H
 import Halogen.HTML.Properties.Indexed as HP
 import PSHendry.Data.Int (parseInt)
-import PSHendry.Halogen.Components.Input (Query, State)
+import PSHendry.Halogen.Components.Input (Query(..), State)
 import PSHendry.Halogen.Components.Input as Input
 
 component :: forall e. H.Component (State Int) (Query Int) (Aff (dom :: DOM | e))
