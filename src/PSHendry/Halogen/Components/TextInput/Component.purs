@@ -4,7 +4,6 @@ module PSHendry.Halogen.Components.TextInput
   , module PSHendry.Halogen.Components.Input
   ) where
 
-
 import PSHendry.Prelude
 import Control.Monad.Aff.AVar (AVAR)
 import DOM (DOM)
