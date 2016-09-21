@@ -6,6 +6,7 @@ module PSHendry.Halogen.Components.TextInput
 
 
 import PSHendry.Prelude
+import Control.Monad.Aff.AVar (AVAR)
 import DOM (DOM)
 import Halogen as H
 import Halogen.HTML.Properties.Indexed as HP
@@ -16,5 +17,5 @@ type Query = InputQuery String
 
 type State = InputState String
 
-component :: forall e. H.Component State Query (Aff (dom :: DOM | e))
+component :: forall e. H.Component State Query (Aff (avar :: AVAR, dom :: DOM | e))
 component = Input.mkComponent HP.InputText id Just

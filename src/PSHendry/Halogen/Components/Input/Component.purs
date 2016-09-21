@@ -4,8 +4,10 @@ module PSHendry.Halogen.Components.Input where
 
 import PSHendry.Prelude
 
+import Control.Monad.Aff.AVar (AVAR)
 import DOM (DOM)
 import Halogen as H
+import Halogen.Component.Utils (raise)
 import Halogen.HTML (ClassName)
 import Halogen.HTML.Indexed as HH
 import Halogen.HTML.Events.Indexed as HE
@@ -15,6 +17,7 @@ import Utils.DOM (focus, select)
 data InputQuery t a
   = GetValue (Maybe t -> a)
   | SetValue t a
+  | ValueChange a
   | Focus a
   | ValueInput String a
 
@@ -31,7 +34,7 @@ mkComponent :: forall t e
    . HP.InputType
   -> (t -> String)
   -> (String -> Maybe t)
-  -> H.Component (InputState t) (InputQuery t) (Aff (dom :: DOM | e))
+  -> H.Component (InputState t) (InputQuery t) (Aff (avar :: AVAR, dom :: DOM | e))
 mkComponent inputType toStr fromStr = H.component { render, eval }
   where
 
@@ -47,12 +50,15 @@ mkComponent inputType toStr fromStr = H.component { render, eval }
       , HE.onValueInput (HE.input ValueInput)
       ]
 
-  eval :: (InputQuery t) ~> H.ComponentDSL (InputState t) (InputQuery t) (Aff (dom :: DOM | e))
+  eval :: (InputQuery t) ~> H.ComponentDSL (InputState t) (InputQuery t) (Aff (avar :: AVAR, dom :: DOM | e))
   eval (GetValue continue) = do
     value <- H.gets _.value
     pure $ continue $ fromStr value
   eval (SetValue v next) = do
     H.modify (_ { value = toStr v })
+    raise $ H.action ValueChange
+    pure next
+  eval (ValueChange next) = do
     pure next
   eval (Focus next) = do
     id <- H.gets _.id
@@ -62,4 +68,5 @@ mkComponent inputType toStr fromStr = H.component { render, eval }
     pure next
   eval (ValueInput v next) = do
     H.modify (_ { value = v })
+    raise $ H.action ValueChange
     pure next

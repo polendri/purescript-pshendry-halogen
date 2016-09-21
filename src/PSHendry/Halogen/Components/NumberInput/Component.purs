@@ -5,6 +5,7 @@ module PSHendry.Halogen.Components.NumberInput
   ) where
 
 import PSHendry.Prelude
+import Control.Monad.Aff.AVar (AVAR)
 import DOM (DOM)
 import Halogen as H
 import Halogen.HTML.Properties.Indexed as HP
@@ -16,5 +17,5 @@ type Query = InputQuery Number
 
 type State = Input.InputState Number
 
-component :: forall e. H.Component State Query (Aff (dom :: DOM | e))
+component :: forall e. H.Component State Query (Aff (avar :: AVAR, dom :: DOM | e))
 component = Input.mkComponent HP.InputNumber show parseNumber
