@@ -1,5 +1,6 @@
 module PSHendry.Data.Number
   ( parseNumber
+  , toFixed
   , toPrecision
   ) where
 
