@@ -11,4 +11,5 @@ parseNumber s = if isNaN num then Nothing else Just num
   where
   num = readFloat s
 
+foreign import toFixed :: Int -> Number -> String
 foreign import toPrecision :: Int -> Number -> String
