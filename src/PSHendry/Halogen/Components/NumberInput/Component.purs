@@ -10,12 +10,10 @@ import DOM (DOM)
 import Halogen as H
 import Halogen.HTML.Properties.Indexed as HP
 import PSHendry.Data.Number (parseNumber, toPrecision)
-import PSHendry.Halogen.Components.Input (InputQuery(..), InputState)
+import PSHendry.Halogen.Components.Input (InputQuery(..), State)
 import PSHendry.Halogen.Components.Input as Input
 
 type Query = InputQuery Number
-
-type State = Input.InputState Number
 
 mkComponent :: forall e
    . Int

@@ -21,7 +21,7 @@ data InputQuery t a
   | Focus a
   | ValueInput String a
 
-type InputState t =
+type State =
   { id :: String
   , classes :: Array ClassName
   , enabled :: Boolean
@@ -34,11 +34,11 @@ mkComponent :: forall t e
    . HP.InputType
   -> (t -> String)
   -> (String -> Maybe t)
-  -> H.Component (InputState t) (InputQuery t) (Aff (avar :: AVAR, dom :: DOM | e))
+  -> H.Component State (InputQuery t) (Aff (avar :: AVAR, dom :: DOM | e))
 mkComponent inputType toStr fromStr = H.component { render, eval }
   where
 
-  render :: (InputState t) -> H.ComponentHTML (InputQuery t)
+  render :: State -> H.ComponentHTML (InputQuery t)
   render state =
     HH.input
       [ HP.id_ state.id
@@ -50,7 +50,7 @@ mkComponent inputType toStr fromStr = H.component { render, eval }
       , HE.onValueInput (HE.input ValueInput)
       ]
 
-  eval :: (InputQuery t) ~> H.ComponentDSL (InputState t) (InputQuery t) (Aff (avar :: AVAR, dom :: DOM | e))
+  eval :: (InputQuery t) ~> H.ComponentDSL State (InputQuery t) (Aff (avar :: AVAR, dom :: DOM | e))
   eval (GetValue continue) = do
     value <- H.gets _.value
     pure $ continue $ fromStr value
