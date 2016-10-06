@@ -56,7 +56,6 @@ mkComponent inputType toStr fromStr = H.component { render, eval }
     pure $ continue $ fromStr value
   eval (SetValue v next) = do
     H.modify (_ { value = toStr v })
-    raise $ H.action ValueChange
     pure next
   eval (ValueChange next) = do
     pure next
