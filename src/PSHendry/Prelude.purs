@@ -1,5 +1,6 @@
 module PSHendry.Prelude
   ( unsafeFromJust
+  , unsafeFromLeft
   , unsafeFromRight
   , module Prelude
   , module Control.Apply
@@ -42,6 +43,9 @@ undefined = unsafeCoerce unit
 
 unsafeFromJust :: forall a. Maybe a -> a
 unsafeFromJust = unsafePartial fromJust
+
+unsafeFromLeft :: forall a b. Either a b -> a
+unsafeFromLeft = unsafePartial fromLeft
 
 unsafeFromRight :: forall a b. Either a b -> b
 unsafeFromRight = unsafePartial fromRight
