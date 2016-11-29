@@ -14,6 +14,7 @@ module PSHendry.Prelude
   , module Data.Either
   , module Data.Functor.Coproduct
   , module Data.Maybe
+  , module Data.Newtype
   , module Data.Traversable
   , module Data.Tuple
   , module Data.Void
@@ -26,12 +27,13 @@ import Control.Monad.Aff (Aff)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Eff.Console (CONSOLE, log)
-import Data.Array ((!!), elemIndex, filter, length, mapWithIndex, zip)
-import Data.Array.Partial (head, tail, unsafeIndex)
-import Data.Const (Const(..), getConst)
+import Data.Array ((!!), elemIndex, filter, length, mapWithIndex, unsafeIndex, zip)
+import Data.Array.Partial (head, tail)
+import Data.Const (Const(..))
 import Data.Either (Either(..), either, fromLeft, fromRight, isLeft, isRight)
-import Data.Functor.Coproduct (Coproduct, coproduct, unCoproduct, left, right)
+import Data.Functor.Coproduct (Coproduct, coproduct, left, right)
 import Data.Maybe (Maybe(..), fromJust, fromMaybe, isJust, isNothing, maybe)
+import Data.Newtype (unwrap)
 import Data.Traversable (class Traversable, traverse, sequence)
 import Data.Tuple (Tuple(..), curry, fst, snd, uncurry)
 import Data.Void (Void, absurd)
